@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<form action="">
+    <input type="text" id="user"/>
+    <input type="password" id="pwd"/>
+    <input type="button" value="tijiao" id="sub">
+</form>
+</body>
+<script>
+  var server={
+    POST:function (url, obj) {
+      var postData = (typeof obj === 'object') ? JSON.stringify(obj) : obj;
+      return fetch(url, {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: postData,
+      }).then(function (res) {
+        return res.json()
+      }).then(function (rs) {
+        return rs
+      });
+    },
+    GET:function (url) {
+      return fetch(url, {
+        method: 'get',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }).then(function (res) {
+        return res.json()
+      }).then(function (rs) {
+        return rs
+      });
+    },
+    DETELE:function (url) {
+      return fetch(url, {
+        method: 'delete',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }).then(function (res) {
+        return res.json()
+      }).then(function (rs) {
+        return rs
+      });
+    }
+  };
+  document.querySelector('#sub').onclick=function (e) {
+    e.preventDefault();
+    server.POST('http://192.168.31.205:3030/users/register',{
+      username:document.querySelector("#user").value,
+      password:document.querySelector("#pwd").value
+    }).then(function (res) {
+      console.log(res);
+    });
+//    server.GET('http://192.168.31.205:3030/users/list').then(function (res) {
+//      console.log(res);
+//    });
+  }
+</script>
+</html>
